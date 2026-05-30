@@ -1,0 +1,429 @@
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+
+/* ─────────────────────────────────────────────────────
+   THEME TOKENS
+───────────────────────────────────────────────────── */
+@theme {
+  --font-sans:  "Helvetica Neue", Arial, sans-serif;
+  --font-mono:  "Courier New", Courier, monospace;
+  --font-serif: "Georgia", serif;
+
+  --color-base-white:    #FEFEFE;
+  --color-base-black:    #1B1B1B;
+  --color-brown-light:   #D7CCC8;
+  --color-brown-medium:  #795548;
+  --color-brown-dark:    #3E2723;
+  --color-cream:         #FDF8F6;
+  --color-math-bg:       #F5F0EE;
+  --color-code-bg:       #1E1412;
+  --color-accent:        #BF360C;
+}
+
+/* ─────────────────────────────────────────────────────
+   RESET / BODY
+───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  @apply bg-brown-light text-base-black font-sans antialiased;
+  margin: 0; padding: 0;
+}
+
+/* ─────────────────────────────────────────────────────
+   SCROLLBAR (webkit)
+───────────────────────────────────────────────────── */
+::-webkit-scrollbar             { width: 8px; height: 8px; }
+::-webkit-scrollbar-track       { background: #D7CCC8; }
+::-webkit-scrollbar-thumb       { background: #795548; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #3E2723; }
+
+/* ─────────────────────────────────────────────────────
+   MARKDOWN BODY — TOP-LEVEL WRAPPER
+───────────────────────────────────────────────────── */
+.markdown-body {
+  color: #1B1B1B;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* ─── Headings ─────────────────────────────────────── */
+.markdown-body h1 {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #3E2723;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin: 2.5rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid #3E2723;
+}
+.markdown-body h1:first-child { margin-top: 0; }
+
+.markdown-body h2 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1B1B1B;
+  margin: 2rem 0 0.8rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 2px solid #D7CCC8;
+}
+
+.markdown-body h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #3E2723;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 1.5rem 0 0.6rem;
+}
+
+.markdown-body h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #795548;
+  margin: 1.2rem 0 0.5rem;
+  font-style: italic;
+}
+
+/* ─── Paragraphs ───────────────────────────────────── */
+.markdown-body p {
+  font-size: 0.88rem;
+  line-height: 1.85;
+  color: #1B1B1B;
+  margin: 0 0 1rem;
+}
+
+/* ─── Lists ────────────────────────────────────────── */
+.markdown-body ul {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0 0 0 1.2rem;
+}
+.markdown-body ul li {
+  font-size: 0.88rem;
+  line-height: 1.75;
+  margin-bottom: 0.35rem;
+  position: relative;
+}
+.markdown-body ul li::before {
+  content: "›";
+  color: #795548;
+  font-weight: 900;
+  font-size: 1rem;
+  position: absolute;
+  left: -1.1rem;
+  top: -1px;
+}
+
+.markdown-body ol {
+  list-style: none;
+  counter-reset: ol-counter;
+  margin: 0 0 1rem;
+  padding: 0 0 0 1.6rem;
+}
+.markdown-body ol li {
+  counter-increment: ol-counter;
+  font-size: 0.88rem;
+  line-height: 1.75;
+  margin-bottom: 0.4rem;
+  position: relative;
+}
+.markdown-body ol li::before {
+  content: counter(ol-counter) ".";
+  color: #3E2723;
+  font-weight: 800;
+  font-size: 0.8rem;
+  position: absolute;
+  left: -1.5rem;
+  top: 1px;
+}
+
+/* ─── Strong / Em ───────────────────────────────────── */
+.markdown-body strong { font-weight: 800; color: #3E2723; }
+.markdown-body em     { font-style: italic; color: #795548; }
+
+/* ─── Horizontal Rule → section divider ────────────── */
+.section-divider {
+  margin: 2rem 0;
+  height: 2px;
+  background: linear-gradient(to right, #3E2723 0%, #D7CCC8 60%, transparent 100%);
+  border: none;
+}
+
+/* ─── Blockquote → insight box ──────────────────────── */
+.insight-box {
+  background: #FDF8F6;
+  border-left: 4px solid #3E2723;
+  border-top: 1px solid #D7CCC8;
+  border-bottom: 1px solid #D7CCC8;
+  border-right: 1px solid #D7CCC8;
+  padding: 0.9rem 1.2rem;
+  margin: 1.2rem 0;
+  box-shadow: 3px 3px 0 #1B1B1B;
+  font-style: italic;
+  color: #3E2723;
+}
+.insight-box p { margin: 0; font-size: 0.88rem; }
+
+/* ─── Inline code ───────────────────────────────────── */
+.inline-code {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.8rem;
+  background: #EDE0DC;
+  color: #BF360C;
+  padding: 1px 5px;
+  border-radius: 3px;
+  border: 1px solid #D7CCC8;
+}
+
+/* ─── Code blocks ───────────────────────────────────── */
+.code-block {
+  position: relative;
+  background: #1E1412;
+  color: #D7CCC8;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  border-left: 3px solid #795548;
+  overflow-x: auto;
+  border-radius: 0 2px 2px 0;
+}
+.code-block code { background: transparent; padding: 0; color: inherit; border: none; }
+.code-lang-badge {
+  position: absolute;
+  top: 6px; right: 10px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #795548;
+  opacity: 0.8;
+}
+
+/* ─── ASCII / Diagram blocks ────────────────────────── */
+.ascii-diagram {
+  background: #1E1412;
+  color: #A5D6A7;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  padding: 1rem 1.2rem;
+  margin: 1.2rem 0;
+  border-left: 3px solid #2E7D32;
+  overflow-x: auto;
+  white-space: pre;
+  border-radius: 0 2px 2px 0;
+}
+.ascii-diagram code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  border: none;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+/* ─────────────────────────────────────────────────────
+   TABLES — beautiful
+───────────────────────────────────────────────────── */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin: 1.2rem 0;
+  border: 2px solid #1B1B1B;
+  box-shadow: 4px 4px 0 #1B1B1B;
+}
+
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.markdown-body thead {
+  background: #3E2723;
+  color: #FDF8F6;
+}
+.markdown-body thead th {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.6rem 0.85rem;
+  border-right: 1px solid #5D4037;
+  text-align: left;
+  white-space: nowrap;
+}
+.markdown-body thead th:last-child { border-right: none; }
+
+.markdown-body tbody tr:nth-child(odd)  { background: #FEFEFE; }
+.markdown-body tbody tr:nth-child(even) { background: #F5F0EE; }
+.markdown-body tbody tr:hover           { background: #EDE0DC; }
+
+.markdown-body tbody td {
+  padding: 0.5rem 0.85rem;
+  border-right: 1px solid #D7CCC8;
+  border-bottom: 1px solid #D7CCC8;
+  vertical-align: top;
+  line-height: 1.6;
+}
+.markdown-body tbody td:last-child { border-right: none; }
+
+/* First column bold / monospace for formula tables */
+.markdown-body tbody td:first-child {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.78rem;
+  color: #3E2723;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────────────────
+   KATEX / MATH
+───────────────────────────────────────────────────── */
+.markdown-body .math-display {
+  overflow-x: auto;
+  margin: 1.2rem 0;
+  padding: 0.8rem 1rem;
+  background: #FDF8F6;
+  border-left: 3px solid #795548;
+  border-right: 1px solid #D7CCC8;
+  border-top: 1px solid #D7CCC8;
+  border-bottom: 1px solid #D7CCC8;
+}
+
+/* Boxed equations: the $$\boxed{...}$$ pattern */
+.markdown-body .katex .boxed {
+  padding: 4px 8px;
+  border: 2px solid #3E2723;
+  border-radius: 3px;
+  background: #FDF8F6;
+}
+
+/* ─────────────────────────────────────────────────────
+   CHART WRAPPER STYLES
+───────────────────────────────────────────────────── */
+.chart-wrap {
+  margin: 1.5rem 0;
+  border: 2px solid #1B1B1B;
+  box-shadow: 4px 4px 0 #1B1B1B;
+  background: #FDF8F6;
+}
+.chart-title {
+  background: #3E2723;
+  color: #FDF8F6;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 0.45rem 0.9rem;
+  border-bottom: 2px solid #1B1B1B;
+}
+.chart-inner {
+  padding: 0.5rem 0.5rem 0.2rem;
+}
+.chart-error {
+  padding: 0.8rem 1rem;
+  background: #FFEBEE;
+  border-left: 3px solid #BF360C;
+  color: #BF360C;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.82rem;
+  margin: 1rem 0;
+}
+
+/* ─────────────────────────────────────────────────────
+   SIDEBAR
+───────────────────────────────────────────────────── */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  margin-bottom: 2px;
+  border-radius: 2px;
+  font-size: 0.78rem;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+  color: rgba(253,248,246,0.8);
+  transition: background 0.15s, color 0.15s;
+  text-decoration: none;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+}
+.sidebar-link:hover {
+  background: rgba(215,204,200,0.12);
+  color: #FDF8F6;
+  border-left-color: #795548;
+}
+.sidebar-link.active {
+  background: #D7CCC8;
+  color: #3E2723;
+  font-weight: 800;
+  border-left-color: #BF360C;
+}
+
+/* ─────────────────────────────────────────────────────
+   COURSE CARD (home)
+───────────────────────────────────────────────────── */
+.course-card {
+  background: #FEFEFE;
+  border: 2px solid #1B1B1B;
+  box-shadow: 4px 4px 0 #1B1B1B;
+  padding: 1.1rem 1.2rem;
+  transition: transform 0.12s, box-shadow 0.12s;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+}
+.course-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #1B1B1B;
+}
+.course-card-title {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #3E2723;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #D7CCC8;
+}
+.course-card-desc {
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: #1B1B1B;
+  flex: 1;
+}
+.course-card-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  background: #3E2723;
+  color: #D7CCC8;
+  font-size: 0.7rem;
+  font-weight: 900;
+  font-family: "Courier New", Courier, monospace;
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────────
+   UTILITY — "key result" highlighted paragraph
+───────────────────────────────────────────────────── */
+.key-result {
+  background: #3E2723;
+  color: #FDF8F6;
+  padding: 0.7rem 1rem;
+  margin: 1rem 0;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.82rem;
+  border-left: 4px solid #BF360C;
+}
