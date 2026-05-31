@@ -454,4 +454,546 @@ The Fermi level must be flat at equilibrium (thermal law).
 The bands bend at the junction by exactly qV_bi.
 \`\`\`
 
+---
+
+## 7. Current in the PN Junction Diode
+
+So far we have studied the junction at equilibrium and described how the depletion zone responds to an applied voltage (it widens or narrows). But we have not yet asked the most important engineering question: **how much current flows when we apply a voltage?** That is what this entire section answers.
+
+The result — the **Shockley diode equation** — is one of the most important equations in all of electronics. We will derive it from first principles, step by step, with no shortcuts.
+
+---
+
+### Section A: What Happens Under Applied Voltage — Revisiting the Barrier
+
+#### The Equilibrium Situation (Recap)
+
+At equilibrium, the built-in potential $V_{bi}$ has erected a potential barrier at the junction. Picture it like a hill: holes on the P-side want to roll down to the N-side (diffusion), but the hill pushes them back (drift). The two forces are **exactly balanced** — no net current flows.
+
+The height of this hill, expressed in electron-volts, is $qV_{bi}$.
+
+#### Forward Bias: The Hill Gets Shorter
+
+Now connect a battery with $+$ to the P-side and $-$ to the N-side. This is **forward bias** with voltage $V > 0$.
+
+The external voltage opposes the internal built-in field. The result: the barrier height **drops** from $V_{bi}$ to $(V_{bi} - V)$.
+
+Think of it this way: you are using the battery to partially fill in the hill. The hill is still there — it is just shorter by exactly $V$ volts.
+
+Now, why does a shorter barrier cause an exponential increase in current? The answer is the **Boltzmann distribution**.
+
+At temperature $T$, the fraction of carriers that have enough thermal energy to climb over a barrier of height $\phi$ is proportional to $e^{-q\phi / kT}$. This is the Boltzmann factor from statistical physics — it tells you how many particles in a thermal distribution have energy above a given threshold.
+
+So the number of holes that can cross the barrier is proportional to:
+$$e^{-q(V_{bi}-V)/kT} = e^{-qV_{bi}/kT} \cdot e^{qV/kT} = e^{-qV_{bi}/kT} \cdot e^{V/V_T}$$
+
+The first factor $e^{-qV_{bi}/kT}$ is a constant (it is the equilibrium value). The second factor $e^{V/V_T}$ is the amplification due to forward bias. Since $V_T = kT/q \approx 26$ mV at room temperature, even a modest forward voltage causes a huge increase:
+
+- $V = 0.026$ V (one $V_T$): current multiplies by $e^1 \approx 2.7\times$
+- $V = 0.26$ V (ten $V_T$): current multiplies by $e^{10} \approx 22{,}000\times$
+- $V = 0.6$ V (typical silicon "on" voltage): current multiplies by $e^{0.6/0.026} \approx e^{23} \approx 10^{10}\times$
+
+This is why forward bias causes an enormous current: the exponential in Boltzmann's law amplifies even small voltage changes into gigantic carrier flow changes.
+
+#### Reverse Bias: The Hill Gets Taller
+
+Apply $+$ to the N-side and $-$ to the P-side. This is **reverse bias** $V < 0$ (or equivalently $V_R > 0$ applied to the N-side).
+
+The external voltage now **adds** to the internal field. The barrier height rises to $(V_{bi} + |V|)$.
+
+Virtually no majority carriers have enough thermal energy to climb this taller hill. The only current that flows comes from the rare **minority carriers** — electrons on the P-side and holes on the N-side — that happen to wander into the depletion zone and get swept across by the strong field. This current is tiny and nearly independent of $|V|$ (once the reverse bias is more than a few $V_T$). It is called the **reverse saturation current** $I_s$.
+
+\`\`\`
+Barrier Height vs. Applied Voltage:
+
+         Equilibrium           Forward Bias          Reverse Bias
+         (V = 0)               (V > 0)               (V < 0)
+
+Energy    |                     |                     |
+  ^       |──────┐              |────┐                |──────────┐
+  |       |      │  Vbi         |    │ Vbi-V           |          │ Vbi+|V|
+  |       |      │              |    │                |          │
+  |       |      └──────        |    └──────          |          └──────
+  |       P      N              P    N                P          N
+
+         Drift = Diffusion     Diffusion > Drift     Drift > Diffusion
+         No net current        Large net current     Tiny net current
+\`\`\`
+
+---
+
+### Section B: The Boltzmann Relations — Carrier Concentrations at the Junction Edges
+
+This section is the mathematical foundation for everything that follows. We need to know: when we apply a voltage $V$, exactly how many minority carriers are present at the edges of the depletion zone?
+
+#### What "Minority Carriers at the Junction Edge" Means
+
+The depletion zone has sharp boundaries:
+- Left edge at $x = -x_p$ (boundary between depletion zone and neutral P-region)
+- Right edge at $x = +x_n$ (boundary between depletion zone and neutral N-region)
+
+Just outside these edges, we are in the **quasi-neutral** regions where there is no significant electric field. This is where minority carriers pile up (or are depleted) in response to the applied voltage.
+
+#### At Equilibrium ($V = 0$)
+
+On the **N-side**, the minority carriers are holes. Their equilibrium concentration far from the junction is:
+$$p_{n0} = \frac{n_i^2}{N_D}$$
+
+On the **P-side**, the minority carriers are electrons. Their equilibrium concentration far from the junction is:
+$$n_{p0} = \frac{n_i^2}{N_A}$$
+
+These are tiny numbers. For silicon with $N_D = 10^{16}$ cm$^{-3}$ and $n_i = 10^{10}$ cm$^{-3}$: $p_{n0} = 10^{20}/10^{16} = 10^4$ cm$^{-3}$. Only one hole for every $10^{11}$ electrons!
+
+#### Under Applied Voltage V: The Junction Law (Loi de la Jonction)
+
+When we apply a forward voltage $V$, the potential barrier drops by $V$. By the same Boltzmann argument as above, the minority carrier concentrations at the **depletion zone edges** are multiplied by $e^{V/V_T}$:
+
+$$\boxed{p_n(+x_n) = p_{n0} \cdot e^{V/V_T}} \quad \text{(minority holes at N-side depletion edge)}$$
+$$\boxed{n_p(-x_p) = n_{p0} \cdot e^{V/V_T}} \quad \text{(minority electrons at P-side depletion edge)}$$
+
+This is the **junction law** (in French: *loi de la jonction*) — one of the most important boundary conditions in semiconductor physics.
+
+**Physical meaning:** The voltage $V$ tilts the Boltzmann distribution. With a lower barrier, exponentially more minority carriers from the opposite side can reach the junction edge. The excess minority carrier concentration above equilibrium is:
+
+$$\Delta p_n(+x_n) = p_{n0}(e^{V/V_T} - 1)$$
+$$\Delta n_p(-x_p) = n_{p0}(e^{V/V_T} - 1)$$
+
+**Numerical examples to make this concrete:**
+
+| Applied Voltage $V$ | $e^{V/V_T}$ | Minority carrier multiplier |
+|---|---|---|
+| 0 V (equilibrium) | $e^0 = 1$ | $1\times$ (no change) |
+| 0.026 V ($= 1 \cdot V_T$) | $e^1 \approx 2.72$ | $2.72\times$ — nearly triples! |
+| 0.13 V ($= 5 \cdot V_T$) | $e^5 \approx 148$ | $148\times$ |
+| 0.26 V ($= 10 \cdot V_T$) | $e^{10} \approx 22{,}000$ | $22{,}000\times$ |
+| 0.5 V | $e^{19.2} \approx 2.2 \times 10^8$ | $220{,}000{,}000\times$ |
+| 0.6 V | $e^{23.1} \approx 1.1 \times 10^{10}$ | $10{,}000{,}000{,}000\times$ |
+
+This explosive growth is the physical reason the diode has such a sharp "turn-on." At 0.5 V the minority carrier density at the junction edge has increased by eight orders of magnitude above its equilibrium value. An enormous diffusion current results.
+
+**At reverse bias ($V < 0$):** the minority carrier concentration at the junction edge actually drops *below* $p_{n0}$. At $V = -5V_T \approx -0.13$ V, $e^{V/V_T} \approx e^{-5} \approx 0.0067$, so the boundary value is only $0.0067 \times p_{n0}$ — nearly zero. This creates a strong gradient that sucks minority carriers *toward* the junction from the bulk. This extraction current is the reverse saturation current.
+
+---
+
+### Section C: Minority Carrier Diffusion in the Quasi-Neutral Zones
+
+Now we know the boundary conditions (Section B). We need to solve for the minority carrier profile in the quasi-neutral regions, and then compute the current from that profile.
+
+This is the heart of diode physics.
+
+#### Setting Up the Problem
+
+Focus on the **N-side** (the quasi-neutral region $x > x_n$), where the minority carriers are holes.
+
+Key assumptions:
+1. **No electric field** in the quasi-neutral region (hence the name "quasi-neutral"). Any field would immediately redistribute majority carriers (electrons) to cancel it. So $\mathcal{E} \approx 0$ here.
+2. **Steady state**: nothing changes with time ($\partial p / \partial t = 0$).
+3. **No light** (no optical generation).
+4. **Low injection**: the injected minority carriers are still much fewer than majority carriers ($\Delta p \ll n_{n0}$). This keeps the math linear.
+
+Under these conditions, the continuity equation for holes in the N-side simplifies to:
+
+$$D_p \frac{d^2 (\Delta p)}{dx^2} = \frac{\Delta p}{\tau_p}$$
+
+where $\Delta p(x) = p(x) - p_{n0}$ is the **excess hole concentration** above equilibrium, $D_p$ is the hole diffusion coefficient, and $\tau_p$ is the minority carrier lifetime (average time before a hole recombines with an electron).
+
+**Recognition:** This is exactly the same differential equation as the "must solve" exercise in the generation-recombination chapter! If you studied that equation there, you already know the solution. The physics here is identical: excess minority carriers diffuse and recombine as they move through the bulk.
+
+#### The Diffusion Length
+
+Define the **diffusion length** for holes:
+$$\boxed{L_p = \sqrt{D_p \tau_p}}$$
+
+$L_p$ has units of cm. It is the **average distance a minority hole travels** before recombining with an electron. It sets the spatial scale over which excess carriers die out. Typical values in silicon: $L_p \sim 10$–$100$ $\mu$m.
+
+Similarly, for minority electrons in the P-side:
+$$L_n = \sqrt{D_n \tau_n}$$
+
+The differential equation in terms of $L_p$ is:
+$$\frac{d^2 (\Delta p)}{dx^2} = \frac{\Delta p}{L_p^2}$$
+
+This is a second-order linear ODE with constant coefficients. Its general solution is:
+$$\Delta p(x) = A \, e^{+(x-x_n)/L_p} + B \, e^{-(x-x_n)/L_p}$$
+
+#### Boundary Conditions
+
+We need two conditions to find $A$ and $B$.
+
+**Condition 1 — At the depletion zone edge ($x = x_n$):**
+
+From the junction law (Section B):
+$$\Delta p(x_n) = p_{n0}(e^{V/V_T} - 1)$$
+
+**Condition 2 — Deep in the bulk ($x \to \infty$):**
+
+Far from the junction, the semiconductor returns to equilibrium: $\Delta p \to 0$.
+
+For this to hold as $x \to \infty$, the growing exponential $e^{+(x-x_n)/L_p}$ must be absent: we must set $A = 0$.
+
+(This is the "long diode" assumption: the neutral N-region is much longer than $L_p$. If the N-region were shorter than $L_p$, we would use a different boundary condition at the ohmic contact instead.)
+
+#### The Solution
+
+With $A = 0$ and $B = p_{n0}(e^{V/V_T} - 1)$:
+
+$$\boxed{\Delta p(x) = p_{n0}(e^{V/V_T} - 1) \cdot e^{-(x - x_n)/L_p} \quad \text{for } x \geq x_n}$$
+
+This is an exponentially decaying profile. The excess holes injected at $x = x_n$ spread into the N-region and gradually recombine as they travel, dying out with a characteristic length $L_p$.
+
+By symmetry (or by repeating the same derivation for the P-side), the excess electron profile in the P-region is:
+
+$$\boxed{\Delta n(x) = n_{p0}(e^{V/V_T} - 1) \cdot e^{+(x + x_p)/L_n} \quad \text{for } x \leq -x_p}$$
+
+(The sign is $+$ in the exponent because $x$ is negative in the P-region, so $x + x_p \leq 0$ and the profile still decays away from the junction.)
+
+\`\`\`
+Minority Carrier Distribution Under Forward Bias (V > 0):
+
+Concentration
+  ^
+  |
+  |  n_p(-xp)       Δn decays with        Δp decays with
+  |  = np0·e^(V/VT) length Ln             length Lp
+  |      \\                                    /
+  |       \\                                  /
+  |        \\                                / ← pn(+xn) = pn0·e^(V/VT)
+  |         \\                              /
+np0 ─ ─ ─ ─ ─\\──────────────────────────/─ ─ ─ ─ pn0 (equilibrium)
+  |            \\────────────────────────/
+  |             [  depletion zone (SCR)  ]
+  |
+  +──────────────────────────────────────────────→ x
+  -xp (P-edge)  -xp  0  +xn  +xn (N-edge)
+                     ↑
+               metallurgical
+                 junction
+
+• Left of -xp: excess electrons Δn in P-region, decaying with Ln
+• Right of +xn: excess holes Δp in N-region, decaying with Lp
+• Inside SCR: not governed by this equation (E-field present)
+\`\`\`
+
+**Physical story:** The forward voltage "injects" minority carriers at both edges of the depletion zone. The injected holes diffuse into the N-bulk (away from the junction, to the right) and the injected electrons diffuse into the P-bulk (to the left). As they diffuse, they recombine with majority carriers and their numbers fall exponentially. The "reach" of injected holes into the N-bulk is $L_p$; the "reach" of injected electrons into the P-bulk is $L_n$.
+
+---
+
+### Section D: The Current in the Diode — The Shockley Equation
+
+We now have the carrier profiles. Current is straightforward to compute: in the quasi-neutral region with no electric field, all current is diffusion current.
+
+#### Step 1 — The Hole Diffusion Current in the N-Region
+
+The hole diffusion current density at any point $x$ in the N-region is:
+$$J_p(x) = -qD_p \frac{d(\Delta p)}{dx}$$
+
+(The minus sign: current flows in the direction of decreasing concentration — from high to low. But holes flowing to the right constitute a positive current in our sign convention.)
+
+Taking the derivative of $\Delta p(x) = p_{n0}(e^{V/V_T} - 1) \cdot e^{-(x-x_n)/L_p}$:
+$$\frac{d(\Delta p)}{dx} = -\frac{p_{n0}(e^{V/V_T}-1)}{L_p} \cdot e^{-(x-x_n)/L_p}$$
+
+So:
+$$J_p(x) = -qD_p \left(-\frac{p_{n0}(e^{V/V_T}-1)}{L_p} \cdot e^{-(x-x_n)/L_p}\right) = q\frac{D_p}{L_p} p_{n0}(e^{V/V_T}-1) \cdot e^{-(x-x_n)/L_p}$$
+
+We evaluate this **at the depletion zone edge** $x = x_n$ (where the exponential equals 1):
+
+$$\boxed{J_p(x_n) = q \frac{D_p}{L_p} p_{n0} (e^{V/V_T} - 1)}$$
+
+#### Step 2 — The Electron Diffusion Current in the P-Region
+
+By an identical calculation on the other side:
+
+$$\boxed{J_n(-x_p) = q \frac{D_n}{L_n} n_{p0} (e^{V/V_T} - 1)}$$
+
+(Electrons moving to the left constitute a positive conventional current to the right — the sign works out to give the same direction as $J_p$.)
+
+#### Step 3 — Why Can We Add These Two Currents?
+
+The total current $J$ must be the **same everywhere** in steady state (charge conservation: what goes in must come out).
+
+So the total current equals the sum of the injection currents at the two depletion zone edges:
+$$J = J_p(x_n) + J_n(-x_p)$$
+
+This is valid because inside the depletion zone, the recombination current is negligible for the ideal Shockley model (we relax this in Section E).
+
+#### Step 4 — Substituting the Minority Carrier Concentrations
+
+Recall $p_{n0} = n_i^2/N_D$ and $n_{p0} = n_i^2/N_A$:
+
+$$J = q n_i^2 \left(\frac{D_p}{N_D L_p} + \frac{D_n}{N_A L_n}\right)(e^{V/V_T} - 1)$$
+
+Define the **saturation current density**:
+
+$$\boxed{J_s = q n_i^2 \left(\frac{D_p}{N_D L_p} + \frac{D_n}{N_A L_n}\right)}$$
+
+Then:
+$$\boxed{J = J_s \left(e^{V/V_T} - 1\right)}$$
+
+Multiplying by the junction area $A$, the **Shockley diode equation** for total current is:
+
+$$\boxed{I = I_s \left(e^{V / n V_T} - 1\right)}$$
+
+where:
+- $I_s = A \cdot J_s$ is the **saturation current** (total, in amperes)
+- $n$ is the **ideality factor** (discussed in Section E; $n = 1$ for the ideal Shockley model)
+- $V_T = kT/q \approx 26$ mV at 300 K
+
+This is the most important equation in diode physics. Every diode — silicon, germanium, LED, solar cell — obeys a version of this equation.
+
+#### Understanding $J_s$: Why It Matters
+
+$$J_s = q n_i^2 \left(\frac{D_p}{N_D L_p} + \frac{D_n}{N_A L_n}\right)$$
+
+Several key observations:
+
+**$J_s \propto n_i^2$:** The intrinsic carrier concentration $n_i$ depends on temperature as $n_i^2 \propto e^{-E_g/kT}$. So $J_s$ is enormously temperature-sensitive. In silicon, $J_s$ roughly **doubles every 10°C**. This means a diode at 60°C carries about $2^{(60-25)/10} = 2^{3.5} \approx 11\times$ more reverse leakage current than at 25°C.
+
+**$J_s$ decreases with higher doping:** Higher $N_D$ and $N_A$ in the denominators means a smaller $J_s$. More doping means more majority carriers available to recombine with minority carriers — this shortens $\tau$ (the lifetime), shortens $L = \sqrt{D\tau}$, and reduces the steady-state minority carrier population. Less stored charge → less current.
+
+**$J_s$ is very small:** For a typical silicon diode at room temperature, $J_s \sim 10^{-12}$ A (one picoamp for a small-area junction). This is why the reverse current is essentially zero in practical circuits.
+
+#### The Two Limiting Cases of the Shockley Equation
+
+**Forward bias ($V \gg V_T$, say $V > 0.1$ V):**
+$$e^{V/V_T} \gg 1 \implies (e^{V/V_T} - 1) \approx e^{V/V_T}$$
+$$I \approx I_s \, e^{V/V_T}$$
+Current grows exponentially. Every 60 mV of additional forward voltage multiplies the current by $e^{60/26} \approx e^{2.3} \approx 10$. (This "60 mV per decade" rule is widely used in circuit design.)
+
+**Reverse bias ($V \ll -V_T$, say $V < -0.1$ V):**
+$$e^{V/V_T} \ll 1 \implies (e^{V/V_T} - 1) \approx -1$$
+$$I \approx -I_s$$
+Current saturates at $-I_s$, independent of how large the reverse voltage is. This is the reverse saturation current — a small, constant trickle of minority carriers being swept across the junction.
+
+\`\`\`
+The Shockley I–V Curve:
+
+    I (current)
+    ^
+    |                              /  ← exponential rise
+    |                             /
+    |                            /
+    |                           /
+    |                          /
+  0 |─────────────────────────/──────────────────→ V (voltage)
+    |         ← reverse        forward →
+    |                         0.6–0.7 V
+    |  ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ← -Is (saturation)
+    |                        ↑
+    |               "turn-on" region
+    |
+    |                    (breakdown not shown)
+    |
+
+Key voltages for silicon at room temperature:
+  • Turn-on voltage: ~0.6–0.7 V (where I becomes "large" in circuits)
+  • At V = 0.6 V: I/Is = e^(0.6/0.026) ≈ e^23 ≈ 10^10
+  • At V = -1 V: I ≈ -Is (fully saturated)
+  • V_T = kT/q = 26 mV at 300 K
+\`\`\`
+
+**Numerical example:** For a silicon diode with $I_s = 10^{-12}$ A:
+- At $V = 0.6$ V: $I = 10^{-12} \times (e^{23.1} - 1) \approx 10^{-12} \times 10^{10} = 10^{-2}$ A = 10 mA
+- At $V = 0.7$ V: $I = 10^{-12} \times e^{26.9} \approx 10^{-12} \times 5 \times 10^{11} \approx 500$ mA
+- At $V = -5$ V: $I \approx -10^{-12}$ A = $-1$ pA
+
+Notice how a 100 mV change from 0.6 V to 0.7 V multiplies the current by 50! This is why the diode's "turn-on voltage" is somewhat ill-defined — the current increases continuously, not at a sharp threshold.
+
+---
+
+### Section E: Recombination Current in the Depletion Zone — The Ideality Factor
+
+The Shockley derivation we just completed made one key assumption: **no recombination inside the depletion zone**. Carriers entering the depletion zone from either side were assumed to pass straight through without recombining. In a real diode, this is not entirely true.
+
+#### What Happens Inside the Depletion Zone
+
+The depletion zone contains traps — energy levels deep in the bandgap created by crystal imperfections or impurity atoms (recall the Shockley–Read–Hall generation-recombination theory). When an electron and a hole are both present at a trap site, they can recombine.
+
+Under forward bias, the barrier has been lowered, so both electrons from the N-side and holes from the P-side are present simultaneously inside the depletion zone. Recombination at trap sites produces an **extra current component** that was not counted in the Shockley derivation.
+
+#### The R/G Current Density in the Depletion Zone
+
+The recombination-generation current density in the SCR (space charge region) is:
+$$J_{rg} = \frac{q n_i W}{2\tau_0} \left(e^{V / 2V_T} - 1\right)$$
+
+where $\tau_0$ is the trap-related carrier lifetime in the SCR and $W$ is the depletion width.
+
+**Compare to the Shockley diffusion current:**
+
+$$J_{diff} = J_s (e^{V/V_T} - 1)$$
+
+The R/G current has $e^{V/2V_T}$ instead of $e^{V/V_T}$. It increases with voltage, but **twice as slowly** on the exponential scale.
+
+Also notice: $J_{rg} \propto n_i$ while $J_{diff} \propto n_i^2$. For silicon at room temperature, $n_i$ is small so $J_{rg}$ can actually dominate at low forward voltages.
+
+#### The Ideality Factor $n$
+
+Rather than write a sum of two exponential terms, engineers describe the combined behavior with a single modified equation:
+
+$$I = I_s \left(e^{V / n V_T} - 1\right)$$
+
+where $n$ is the **ideality factor** (also called the **emission coefficient**):
+
+- $n = 1$: pure Shockley behavior (minority carrier injection dominates). The ideal long-diode case.
+- $n = 2$: pure R/G behavior in the depletion zone (trap-assisted recombination dominates).
+- $1 < n < 2$: mixed behavior (both mechanisms present).
+
+**At what bias level does each mechanism dominate?**
+
+The diffusion current $J_{diff} \propto J_s \, e^{V/V_T}$ grows faster than the R/G current $J_{rg} \propto e^{V/2V_T}$. So at **high forward bias**, diffusion current wins and $n \to 1$. At **low forward bias**, R/G current can dominate and $n \to 2$.
+
+\`\`\`
+Ideality Factor Behavior:
+
+  log(I)
+    ^
+    |                    slope = 1/VT  (n=1, diffusion dominates)
+    |                  /
+    |                / ← transition region
+    |              /
+    |            /
+    |          /  slope = 1/(2VT)  (n=2, R/G in SCR dominates)
+    |        /
+    |      /
+    |    /
+    +──────────────────────────→ V
+
+  At LOW forward bias: slope on log(I) vs V plot → 1/(2·26mV) → n≈2
+  At HIGH forward bias: slope → 1/(26mV) → n≈1
+  "Knee" voltage where transition occurs: ~0.3–0.4 V for silicon
+\`\`\`
+
+**Why does n=2 at low bias make physical sense?** At low forward voltage, the carrier concentrations inside the depletion zone are barely above the intrinsic level. Each carrier has a long time to find a trap before crossing the entire SCR. Trap-assisted recombination is the dominant loss mechanism. At high forward bias, the carrier concentrations are enormous and the Boltzmann injection current completely overwhelms the recombination leakage.
+
+---
+
+### Section F: Junction Capacitances — Two Types
+
+A PN junction has two distinct capacitance mechanisms. Understanding both is essential for predicting the speed of diodes and transistors in circuits.
+
+#### Type 1: Transition (Depletion) Capacitance $C_j$
+
+We already derived this in Section 6. The depletion zone with its fixed charges on either side acts like a parallel-plate capacitor:
+$$C_j = \frac{\varepsilon_s}{W} \quad \text{(per unit area)}$$
+
+Since $W \propto \sqrt{V_{bi} + V_R}$ (grows with reverse bias), $C_j$ decreases with reverse bias:
+$$C_j(V) = \frac{C_{j0}}{\sqrt{1 + V_R/V_{bi}}} \propto (V_{bi} - V)^{-1/2}$$
+
+where $C_{j0} = \varepsilon_s/W_0$ is the zero-bias value.
+
+This voltage-variable capacitance is exploited in **varactor diodes** (also called varicap diodes): by changing the reverse bias, you change $C_j$ and hence tune the resonant frequency of an LC circuit. Used in FM radio tuners, phase-locked loops, and voltage-controlled oscillators.
+
+$C_j$ dominates at **reverse bias and small forward bias**, when there is minimal charge injection.
+
+#### Type 2: Diffusion Capacitance $C_d$ — The Missing Piece
+
+Under forward bias, minority carriers are injected into the quasi-neutral regions and stored there as that exponentially-decaying cloud of excess carriers we computed in Section C. This stored charge responds to changes in the applied voltage — and that is exactly what a capacitor does.
+
+**Charge stored per unit area in the N-region (excess holes):**
+
+$$Q_p = q \int_{x_n}^{\infty} \Delta p(x) \, dx = q \int_{x_n}^{\infty} p_{n0}(e^{V/V_T}-1) e^{-(x-x_n)/L_p} dx$$
+
+$$= q \, p_{n0}(e^{V/V_T}-1) \cdot L_p$$
+
+(The integral of $e^{-(x-x_n)/L_p}$ from $x_n$ to $\infty$ is simply $L_p$.)
+
+Similarly, charge stored per unit area in the P-region (excess electrons):
+$$Q_n = q \, n_{p0}(e^{V/V_T}-1) \cdot L_n$$
+
+**The diffusion capacitance** (per unit area) from the N-side contribution:
+
+$$C_d = \frac{dQ_p}{dV} = \frac{q \, L_p \, p_{n0}}{V_T} e^{V/V_T}$$
+
+Since $I_p \approx q(D_p/L_p) p_{n0} e^{V/V_T}$ and $L_p^2 = D_p \tau_p$, this can be rewritten as:
+
+$$C_d \approx \frac{I_p \tau_p}{V_T} = \frac{I \tau_0}{V_T}$$
+
+where $\tau_0$ is an effective minority carrier lifetime combining both sides.
+
+$$\boxed{C_d \approx \frac{I \tau_0}{V_T}}$$
+
+This remarkably simple result says: **the diffusion capacitance is proportional to the forward current.**
+
+**Numerical feeling:** At $I = 1$ mA, $\tau_0 = 1$ ns, $V_T = 26$ mV:
+$$C_d \approx \frac{10^{-3} \times 10^{-9}}{0.026} \approx 38 \text{ pF}$$
+
+At $I = 10$ mA:
+$$C_d \approx 380 \text{ pF}$$
+
+Compare with a typical $C_j \sim 1$–$10$ pF. The diffusion capacitance at 10 mA is **100× larger** than the depletion capacitance! This is why forward-biased diodes cannot switch off instantly.
+
+#### Comparison of the Two Capacitances
+
+| Property | Transition Cap. $C_j$ | Diffusion Cap. $C_d$ |
+|---|---|---|
+| Physical origin | Fixed charge in depletion zone | Stored minority carrier charge |
+| Dominant regime | Reverse bias & small forward bias | Forward bias |
+| Voltage dependence | $C_j \propto (V_{bi}-V)^{-1/2}$ | $C_d \propto e^{V/V_T}$ |
+| Current dependence | Nearly independent of $I$ | $C_d \propto I$ |
+| Typical magnitude | 1–10 pF | 10s to 1000s pF at forward bias |
+| Application | Varactor tuning | Limits switching speed |
+
+**Total junction capacitance:** $C_{total} = C_j + C_d$
+
+\`\`\`
+Junction Capacitance vs. Voltage:
+
+  log(C)
+    ^
+    |      Cd = I·τ/VT            ← grows exponentially with V
+    |       \\ (dominates for V > ~0.4V)
+    |        \\
+    |─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
+    |         Cj = εs/W ← decreases as reverse bias increases
+    |        /
+    |       /   (Cj dominates for V < ~0.3V)
+    |      /
+    |     /
+    +──────────────────────────────→ V
+        reverse | 0 |   forward
+        bias        |   bias
+
+• For V << 0 (strong reverse): only Cj, and Cj → 0 as V → -∞
+• For V ≈ 0: Cj = Cj0 (zero-bias depletion cap)
+• For V >> 0 (strong forward): Cd completely dominates
+\`\`\`
+
+#### Why Does $C_d$ Limit Switching Speed?
+
+Imagine a diode carrying 10 mA of forward current. You want to suddenly turn it off (apply reverse bias). The diode has a large $C_d \propto I \tau_0 / V_T$ — the quasi-neutral regions are full of stored minority carriers. Before the diode can stop conducting, these stored carriers must be removed (either by recombination or by being swept out by the reverse current).
+
+The time required to remove them is on the order of $\tau_0$ (the minority carrier lifetime). This is the **reverse recovery time** $t_{rr}$.
+
+- For ordinary silicon diodes: $\tau_0 \sim 1$–$10$ $\mu$s → $t_{rr} \sim \mu$s → usable up to ~100 kHz
+- For **fast recovery diodes** (gold-doped silicon): $\tau_0 \sim 10$–$100$ ns → $t_{rr} \sim$ns → usable up to ~10 MHz
+- For **Schottky diodes** (metal-semiconductor junction, no minority carrier storage): $t_{rr} \sim$ ps → usable at GHz frequencies
+
+The Schottky diode avoids $C_d$ entirely because it conducts by majority carrier injection only — there is no minority carrier injection, hence no stored charge, hence no diffusion capacitance. This makes it the diode of choice in high-frequency and switching power supply applications.
+
+---
+
+## 📋 Complete Law Summary — PN Junction (Updated)
+
+| Law / Formula | Expression | Description |
+|---|---|---|
+| Built-in potential | $V_{bi} = V_T \ln\left(\frac{N_A N_D}{n_i^2}\right)$ | Internal junction voltage |
+| Charge neutrality | $N_A x_p = N_D x_n$ | Equal charge on each side |
+| Total depletion width | $W = \sqrt{\frac{2\varepsilon_s}{q}\left(\frac{1}{N_A}+\frac{1}{N_D}\right)V_{bi}}$ | At zero bias |
+| Width under bias | $W(V) = \sqrt{\frac{2\varepsilon_s}{q}\left(\frac{1}{N_A}+\frac{1}{N_D}\right)(V_{bi}+V_R)}$ | Reverse bias $V_R$ |
+| Width scaling | $W(V_R) = W(0)\sqrt{(V_{bi}+V_R)/V_{bi}}$ | Simple scaling form |
+| N-side penetration | $x_n = W \cdot N_A/(N_A+N_D)$ | Into N-side (lighter doped → larger) |
+| P-side penetration | $x_p = W \cdot N_D/(N_A+N_D)$ | Into P-side |
+| Peak electric field | $\mathcal{E}_{max} = 2V_{bi}/W = qN_D x_n/\varepsilon_s$ | At metallurgical junction |
+| Junction (depletion) capacitance | $C_j = \varepsilon_s / W$ (F/cm²) | Decreases with reverse bias |
+| Junction law (boundary condition) | $p_n(x_n) = p_{n0} e^{V/V_T}$ | Minority holes at depletion edge |
+| Diffusion length | $L_p = \sqrt{D_p \tau_p}$, $L_n = \sqrt{D_n \tau_n}$ | Average distance before recombination |
+| Excess minority profile (N-side) | $\Delta p(x) = p_{n0}(e^{V/V_T}-1)e^{-(x-x_n)/L_p}$ | Exponential decay from junction |
+| Saturation current density | $J_s = q n_i^2 \left(\frac{D_p}{N_D L_p} + \frac{D_n}{N_A L_n}\right)$ | Proportional to $n_i^2$ |
+| Shockley diode equation | $I = I_s(e^{V/nV_T} - 1)$ | Complete I–V relationship |
+| Ideality factor | $n=1$ (ideal diffusion), $n=2$ (R/G in SCR) | Indicates dominant mechanism |
+| Thermal voltage | $V_T = kT/q = 26$ mV at 300 K | Scale for exponential behavior |
+| Diffusion capacitance | $C_d \approx I\tau_0 / V_T$ | Forward bias stored charge |
+| Total capacitance | $C = C_j + C_d$ | Both mechanisms |
+
+**Key physical numbers for silicon at 300 K:** $V_T = 26$ mV, $n_i \approx 10^{10}$ cm$^{-3}$, $E_g = 1.12$ eV, $\varepsilon_s = 11.7\varepsilon_0 = 1.04 \times 10^{-12}$ F/cm, turn-on voltage $\approx 0.6$–$0.7$ V.
+
 `;
+
