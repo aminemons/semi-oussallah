@@ -416,6 +416,26 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────
+   RESPONSIVE — mobile adjustments
+───────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  /* Prevent math & code blocks from blowing out the viewport */
+  .markdown-body .math-display { overflow-x: auto; }
+  .ascii-diagram               { font-size: 0.68rem; }
+  .code-block                  { font-size: 0.75rem; }
+
+  /* Tables scroll horizontally on narrow screens */
+  .table-wrap                  { overflow-x: auto; }
+
+  /* Tighter heading sizes */
+  .markdown-body h1 { font-size: 1rem; }
+  .markdown-body h2 { font-size: 0.95rem; }
+
+  /* Welcome card stacks vertically */
+  .home-welcome-card { flex-direction: column !important; }
+}
+
+/* ─────────────────────────────────────────────────────
    UTILITY — "key result" highlighted paragraph
 ───────────────────────────────────────────────────── */
 .key-result {

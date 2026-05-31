@@ -14,14 +14,6 @@ Understanding both mechanisms — and how they combine — is the foundation for
 
 ## 1. Drift — Motion Driven by Electric Field
 
-### What is an Electric Field?
-
-An **electric field ($\\mathcal{E}$)** is a region of space where a charged particle experiences a force. It is created by voltage differences. If you apply a voltage $V$ across a material of length $L$:
-
-$$\\mathcal{E} = -\\frac{dV}{dx} \\approx \\frac{V}{L}$$
-
-Unit: V/cm or V/m. The field points from high voltage to low voltage (from + to −).
-
 ### How Electrons Move in a Crystal Under an Electric Field
 
 Imagine an electron in a silicon crystal with an electric field applied. The field creates a force $F = -q\\mathcal{E}$ (negative because electrons are negatively charged, they move opposite to the field direction). But the electron doesn't just accelerate endlessly — it constantly crashes into:
@@ -137,10 +129,6 @@ At room temperature ($T = 300K$):
 $$V_T = \\frac{kT}{q} = \\frac{0.026 \\text{ eV}}{1} = 26 \\text{ mV}$$
 
 *(Remember: in eV, $q$ cancels, giving $V_T = kT$ in eV = 0.026 V = 26 mV)*
-
-**Why this is powerful:** If you know the mobility from a resistivity measurement, you immediately know the diffusion coefficient:
-$$D_n = \\mu_n V_T = 1350 \\times 0.026 \\approx 35 \\text{ cm}^2/\\text{s}$$
-$$D_p = \\mu_p V_T = 480 \\times 0.026 \\approx 12.5 \\text{ cm}^2/\\text{s}$$
 
 **Physical origin:** Both $\\mu$ and $D$ are determined by how often carriers are scattered (collide). More scattering → lower $\\mu$ → lower $D$. Their ratio always gives $kT/q$ because that ratio eliminates the scattering-rate dependence.
 

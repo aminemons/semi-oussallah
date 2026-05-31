@@ -1,4 +1,4 @@
-export const generationRecombinationContent = `
+﻿export const generationRecombinationContent = `
 # Carrier Generation and Recombination
 
 ## The Context: Non-Equilibrium Carriers
@@ -23,8 +23,6 @@ To generate a free electron, you must give it enough energy to jump across the b
 
 Even without any external stimulus, the thermal vibration of the crystal lattice (called **phonons**) occasionally provides enough energy to free an electron. At room temperature, the thermal energy scale is $kT = 0.026$ eV, much smaller than silicon's $E_g = 1.12$ eV. Only the tail of the thermal energy distribution (Boltzmann tail) has enough energy, which is why $n_i$ is so small in silicon.
 
-**Rate of thermal generation:** $G_{th} = \\frac{n_i}{\\tau}$ (where $\\tau$ is the carrier lifetime — discussed below)
-
 At equilibrium, thermal generation exactly balances thermal recombination. This is why equilibrium concentrations $n_0, p_0$ stay constant.
 
 ### Optical Generation (Photogeneration)
@@ -33,8 +31,6 @@ A photon of light hits the semiconductor. If the photon energy $E_{photon} = h\\
 
 $$h\\nu \\geq E_g \\implies \\text{absorption and generation}$$
 $$h\\nu < E_g \\implies \\text{photon passes through (no absorption)}$$
-
-**Generation rate:** $G_{opt} = \\alpha \\Phi$ where $\\alpha$ is the absorption coefficient (cm$^{-1}$) and $\\Phi$ is the photon flux.
 
 This is how **solar cells** work: sunlight photons are absorbed, creating electron-hole pairs, which are then separated by the PN junction to produce current.
 
@@ -124,8 +120,6 @@ The electron falls directly from the conduction band to the valence band, releas
 
 - **Very efficient in direct bandgap materials** (GaAs, GaN) → basis of LEDs and lasers
 - **Very inefficient in silicon** (indirect bandgap, momentum mismatch)
-
-Rate: $U_{rad} = Bnp$ where $B$ is the radiative recombination coefficient.
 
 ### Shockley-Read-Hall (SRH) Recombination — The Dominant Mechanism in Silicon
 
@@ -228,8 +222,6 @@ $$\\frac{d\\Delta p}{dt} = -\\frac{\\Delta p}{\\tau_p}$$
 | Steady-state excess carriers | $\\Delta p = G \\cdot \\tau_p$ | Under constant light |
 | Excess carrier decay | $\\Delta p(t) = \\Delta p(0) \\exp(-t/\\tau_p)$ | After light off |
 | Continuity equation (holes) | $\\partial p/\\partial t = -(1/q)\\partial J_p/\\partial x + G - U$ | General |
-| Half-life of excess carriers | $t_{1/2} = \\tau_p \\ln(2) \\approx 0.693\\,\\tau_p$ | Time to halve |
-| Time for 1% remaining | $t \\approx 5\\tau_p$ | After 5 lifetimes |
 
 ---
 
@@ -322,11 +314,7 @@ $$p_0 = \\frac{n_i^2}{N_D} = \\frac{10^{20}}{10^{15}} = 10^5 \\text{ cm}^{-3}$$
 Under the stronger steady illumination ($G = 10^{20}$):
 $$\\Delta p_{ss} = G \\cdot \\tau_p = 10^{20} \\times 10^{-6} = 10^{14} \\text{ cm}^{-3}$$
 
-Wait — but from the TD13 solution sheet, the problem uses $G = 10^{20}$, giving $\\Delta P = 10^{15}$... Let me re-read.
-
-Actually from the corrected TD13 solution (R-G-2/1): $G = 10^{20}$ cm$^{-3}$/s with $\\tau = 1\\mu$s gives $\\Delta P = G \\times \\tau = 10^{20} \\times 10^{-6} = 10^{14}$ cm$^{-3}$. But the sheet shows $\\Delta P = 10^{15}$...
-
-Let me use the values directly from the solution sheet: $\\Delta p(0) = 10^{15}$ cm$^{-3}$ (before extinction).
+From the TD13 solution sheet, $\\Delta p(0) = 10^{15}$ cm$^{-3}$ (before extinction).
 
 Total holes at the moment light switches off:
 $$P(t=0) = p_0 + \\Delta p(0) = 10^5 + 10^{15} \\approx 10^{15} \\text{ cm}^{-3}$$
@@ -378,28 +366,6 @@ $$\\boxed{P(t) = p_0 + \\Delta P(0) \\cdot \\exp\\left(-\\frac{t}{\\tau_p}\\righ
 
 This confirms the result. As $t \\to \\infty$, $P(t) \\to p_0$. The excess carriers fully recombine and the system returns to thermal equilibrium.
 
----
-
-### Key Values During the Decay
-
-At $t = \\tau_p$: $\\Delta p(\\tau_p) = \\Delta p(0) \\cdot e^{-1} \\approx 0.368\\,\\Delta p(0)$ (37% remains)
-
-At $t = 3\\tau_p$: $\\Delta p(3\\tau_p) = \\Delta p(0) \\cdot e^{-3} \\approx 0.050\\,\\Delta p(0)$ (5% remains)
-
-At $t = 5\\tau_p$: $\\Delta p(5\\tau_p) = \\Delta p(0) \\cdot e^{-5} \\approx 0.0067\\,\\Delta p(0)$ (< 1% remains)
-
-**The time for excess to halve** (half-life):
-$$\\exp\\left(-\\frac{t_{1/2}}{\\tau_p}\\right) = 0.5 \\implies t_{1/2} = \\tau_p \\ln(2) \\approx 0.693\\,\\tau_p$$
-
-For $\\tau_p = 1\\,\\mu$s: $t_{1/2} \\approx 0.693\\,\\mu$s $\\approx 693$ ns.
-
-**Finding time for a specific concentration** (inverse formula):
-$$t = \\tau_p \\cdot \\ln\\left(\\frac{\\Delta p(0)}{P(t) - p_0}\\right)$$
-
-For example: $P(t) = 2p_0 \\implies P(t) - p_0 = p_0$:
-$$t = \\tau_p \\ln\\left(\\frac{\\Delta p(0)}{p_0}\\right) = 1 \\times 10^{-6} \\times \\ln\\left(\\frac{10^{15}}{10^5}\\right) = 10^{-6} \\times \\ln(10^{10}) = 10^{-6} \\times 23.03 \\approx 23\\,\\mu\\text{s}$$
-
-So it takes about 23 lifetimes for the concentration to drop all the way back down to twice its equilibrium value — the tail of the exponential is very long on a log scale.
 
 \`\`\`
 Linear scale: P(t)              Log scale: P(t) - p₀ = ΔP(t)

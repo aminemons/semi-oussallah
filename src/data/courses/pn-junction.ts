@@ -1,58 +1,6 @@
 export const pnJunctionContent = `
 # The PN Junction
 
-## Prerequisites: P-type and N-type Semiconductors (Doping)
-
-Before we can discuss the PN junction, we need to understand what P-type and N-type silicon are.
-
-### Intrinsic Silicon (Pure)
-
-Pure silicon has 4 valence electrons. In the crystal, each silicon atom shares one electron with each of its 4 neighbors, forming 4 covalent bonds. At room temperature, $n_i \\approx 10^{10}$ cm$^{-3}$ electrons and holes exist due to thermal generation. Extremely poor conductor.
-
-\`\`\`chart
-{"type":"band-diagram","title":"Energy Band Diagram — N-type Silicon (Fermi level near CB)","subtype":"ntype"}
-\`\`\`
-
-### N-type Silicon (Donor Doping)
-
-We deliberately add atoms from **Group V** of the periodic table — elements with **5 valence electrons** — such as Phosphorus (P), Arsenic (As), or Antimony (Sb). These are called **donors**.
-
-When a phosphorus atom replaces a silicon atom in the crystal:
-- 4 of its 5 electrons form covalent bonds with the 4 neighboring Si atoms
-- The **5th electron** has no covalent bond partner — it is very loosely bound to the phosphorus nucleus
-- At room temperature, thermal energy easily frees this 5th electron into the conduction band
-- The phosphorus atom becomes a positively charged **fixed ion** ($P^+$), immobile in the crystal lattice
-
-\`\`\`
-N-type Silicon:
-
-  Si — Si — P⁺ — Si         e⁻  ← freed electron (mobile, in CB)
-  |    |    |    |
-  Si — Si — Si — Si          P⁺ remains fixed in lattice (immobile)
-\`\`\`
-
-**Result:** For every donor atom added, one extra free electron is created. If donor concentration is $N_D$ cm$^{-3}$:
-- $n_0 \\approx N_D$ (majority carriers: electrons)
-- $p_0 = n_i^2/N_D$ (minority carriers: holes, very few)
-- Fermi level moves UP toward conduction band
-
-### P-type Silicon (Acceptor Doping)
-
-We add atoms from **Group III** — elements with **3 valence electrons** — such as Boron (B), Aluminum (Al), or Gallium (Ga). These are called **acceptors**.
-
-When a boron atom replaces a silicon atom:
-- 3 valence electrons form 3 covalent bonds with 3 neighbors
-- The **4th bond** is missing an electron — there is an empty "seat"
-- An electron from a nearby Si-Si bond can jump in to fill it (needing very little energy)
-- This creates a **hole** (empty bond in the silicon lattice) and leaves behind a negatively charged **fixed ion** ($B^-$)
-
-**Result:** For every acceptor atom, one hole is created:
-- $p_0 \\approx N_A$ (majority carriers: holes)
-- $n_0 = n_i^2/N_A$ (minority carriers: electrons, very few)
-- Fermi level moves DOWN toward valence band
-
----
-
 ## 1. What Happens When P and N Come Together
 
 Imagine two separate blocks: a P-type block (full of holes, concentration $N_A$) and an N-type block (full of electrons, concentration $N_D$). We suddenly join them to form a seamless crystal. What happens next is a chain of physical events:
@@ -132,7 +80,7 @@ $$\\boxed{V_{bi} = V_T \\ln\\left(\\frac{N_A \\cdot N_D}{n_i^2}\\right)}$$
 
 Equivalently: $\\dfrac{p_{p0}}{p_{n0}} = \\exp\\left(\\dfrac{V_{bi}}{V_T}\\right)$, showing how the built-in potential determines the carrier ratio across the junction.
 
-**Why can't you measure $V_{bi}$ with a voltmeter?** If you connect metal probes to the P and N sides, the metal-semiconductor contacts create their own contact potentials that exactly cancel $V_{bi}$. The total EMF around any circuit at equilibrium is zero (Kirchhoff's voltage law must hold at equilibrium). $V_{bi}$ is an internal microscopic potential hill, not a free energy source.
+$V_{bi}$ cannot be measured at equilibrium: the contact potentials at the metal probes cancel it out exactly.
 
 ---
 
@@ -228,22 +176,7 @@ The depletion zone with its fixed charges on either side acts like a parallel-pl
 
 $$C_j = \\frac{\\varepsilon_s}{W} \\quad \\text{(F/cm}^2\\text{)}$$
 
-Since $W$ depends on applied voltage, $C_j$ also varies with voltage. This **voltage-tunable capacitance** is exploited in **varactor diodes** (used in radio tuners, phase-locked loops, etc.).
-
----
-
-## 7. Breakdown Voltage
-
-If the reverse bias $V_R$ is increased to a critical value, the electric field $\\mathcal{E}_{max}$ becomes so large ($\\sim 10^6$ V/cm in silicon) that:
-
-- **Avalanche breakdown:** Carriers gain enough energy to create new electron-hole pairs by impact ionization. These new carriers repeat the process → exponential current multiplication → breakdown.
-
-- **Zener breakdown:** At very high doping levels, the field directly tears electrons from valence band bonds (quantum tunneling across the gap).
-
-The **breakdown voltage:**
-$$V_{BR} = \\frac{\\varepsilon_s \\mathcal{E}_{crit}^2}{2qN} \\quad \\text{where N is the lighter doping}$$
-
-For silicon: $\\mathcal{E}_{crit} \\approx 10^6$ V/cm (also written 1 MV/cm). More lightly doped junctions have higher breakdown voltages but also wider depletion zones.
+Since $W$ depends on applied voltage, $C_j$ also varies with voltage.
 
 ---
 
@@ -260,7 +193,6 @@ For silicon: $\\mathcal{E}_{crit} \\approx 10^6$ V/cm (also written 1 MV/cm). Mo
 | P-side penetration | $x_p = W \\cdot N_D/(N_A+N_D)$ | Into P-side |
 | Peak electric field | $\\mathcal{E}_{max} = 2V_{bi}/W = qN_D x_n/\\varepsilon_s$ | At metallurgical junction |
 | Junction capacitance | $C_j = \\varepsilon_s / W$ (F/cm²) | Depletion capacitance |
-| Breakdown condition | $\\mathcal{E}_{max} = \\mathcal{E}_{crit} \\approx 10^6$ V/cm (Si) | Avalanche limit |
 
 **Silicon constants:** $\\varepsilon_s = 11.7\\varepsilon_0 = 1.04 \\times 10^{-12}$ F/cm, $q = 1.6 \\times 10^{-19}$ C, $n_i \\approx 10^{10}$ cm$^{-3}$
 
@@ -315,50 +247,16 @@ $$\\boxed{V_{bi} \\approx 0.838 \\text{ V}}$$
 
 ---
 
-## Exercise 2: Electric Field from Minority Carrier Profile
-
-**Problem:** In the N-side neutral region of the PN junction, the minority carrier (hole) concentration profile under injection follows:
-
-$$p(x) = p_0 \\cdot e^{-x/L_p}, \\quad x \\geq 0$$
-
-where $p_0$ is the hole concentration at the edge of the depletion zone and $L_p$ is the minority carrier diffusion length.
-
-**Find the electric field $\\mathcal{E}(x)$ in this region.**
-
-Since in the neutral N-side there is no net current (it's in "steady state" with $J_p = 0$):
-$$J_p = qp\\mu_p\\mathcal{E} - qD_p\\frac{dp}{dx} = 0$$
-
-$$\\implies \\mathcal{E}(x) = \\frac{D_p}{\\mu_p} \\cdot \\frac{1}{p(x)} \\cdot \\frac{dp}{dx}$$
-
-Using Einstein relation $D_p/\\mu_p = V_T$, and computing $dp/dx$:
-$$\\frac{dp}{dx} = -\\frac{p_0}{L_p} e^{-x/L_p} = -\\frac{p(x)}{L_p}$$
-
-Therefore:
-$$\\mathcal{E}(x) = V_T \\cdot \\frac{1}{p(x)} \\cdot \\left(-\\frac{p(x)}{L_p}\\right) = -\\frac{V_T}{L_p}$$
-
-$$\\boxed{\\mathcal{E}(x) = -\\frac{V_T}{L_p} = -\\frac{kT/q}{L_p} = \\text{constant!}}$$
-
-**Numerical value:** With $L_p = 10^{-4}$ cm (typical):
-$$\\mathcal{E} = -\\frac{0.026 \\text{ V}}{10^{-4} \\text{ cm}} = -260 \\text{ V/cm}$$
-
-$$\\boxed{\\mathcal{E} = -260 \\text{ V/cm}}$$
-
-**Physical interpretation:** This constant, negative (pointing in $-x$ direction) field is a **self-consistent built-in field** that arises from the exponentially decreasing hole profile. It counteracts the diffusion tendency of holes (holes naturally want to spread out to the right where $p$ is lower). The field pushes holes back to the left. At $J_p = 0$ equilibrium, these exactly cancel. The field points left (negative $x$) to push holes (positive charge) to the left, counteracting their rightward diffusion.
-
----
-
 # TD 15 — PN Junction Depletion Zone: Complete Solutions (Exercise 2)
 
 ## Exercise 2: Depletion Zone Analysis
 
-**Given:**
+**Given (TD15, using approximate constants):**
 - PN junction with $N_A = 10^{18}$ cm$^{-3}$ (P-side) and $N_D = 10^{16}$ cm$^{-3}$ (N-side)
-- $V_{bi} = 0.7$ V (given or calculated)
-- $\\varepsilon_s = 10^{-12}$ F/cm (approximate for silicon: $11.7 \\times 8.85 \\times 10^{-14}$)
+- $V_{bi} = 0.7$ V
+- $\\varepsilon_s = 10^{-12}$ F/cm
 - $q = 1.6 \\times 10^{-19}$ C
 - At reverse bias: $V_R = 4$ V
-
-*(These are approximate values; exact values may differ from TD16 by the specific constants used)*
 
 **1. Calculate the total depletion width $W$ at zero bias:**
 
@@ -556,18 +454,4 @@ The Fermi level must be flat at equilibrium (thermal law).
 The bands bend at the junction by exactly qV_bi.
 \`\`\`
 
----
-
-## Important General Rules for PN Junctions (from TD16 solution notes)
-
-The following dependencies are important to know for exam questions:
-
-- **$T \\uparrow$** (temperature increases) $\\implies n_i \\uparrow$ and $E_g \\downarrow$ (bandgap narrows)
-- **$T \\uparrow$** $\\implies V_{bi} \\downarrow$ (built-in potential decreases with temperature, more carriers can cross)
-- **$V_R \\uparrow$** (reverse bias increases) $\\implies W \\uparrow$ (depletion zone widens)
-- **$V_R \\uparrow$** $\\implies C_j \\downarrow$ (junction capacitance decreases)
-- **$N_{min} \\uparrow$** (less-doped side becomes more doped) $\\implies V_{BR} \\downarrow$ (breakdown voltage decreases)
-- **$N_A > N_D$** $\\implies x_p < x_n$ (more depletion into less-doped N-side)
-- Critical field for Si: $\\mathcal{E}_{crit}(Si) \\approx 1$ MV/cm $= 10^6$ V/cm
-- Intrinsic concentration of Si: $n_i(Si) \\approx 10^{10}$ cm$^{-3}$ at 300K
 `;

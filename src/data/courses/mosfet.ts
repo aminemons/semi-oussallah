@@ -5,9 +5,7 @@ export const mosfetContent = `
 
 **MOSFET** = Metal–Oxide–Semiconductor Field-Effect Transistor.
 
-A transistor is, at its core, a **voltage-controlled switch** (or current amplifier). The MOSFET is the most important electronic device ever invented. Your smartphone CPU has roughly 16 billion of them packed into a chip smaller than your fingernail.
-
-The MOSFET is built directly on top of the MOS Capacitor concept. If you understood the MOS capacitor, you are 80% of the way to understanding the MOSFET.
+A transistor is, at its core, a **voltage-controlled switch**. The MOSFET is built directly on top of the MOS Capacitor concept.
 
 ---
 
@@ -221,56 +219,6 @@ $$r_o = \\frac{1}{\\lambda I_D}$$
 
 ---
 
-## 5. Small-Signal Model — For Amplifier Analysis
-
-When the MOSFET is used as an amplifier (in saturation, with a small signal $v_{gs}$ superimposed on bias), it acts as a **voltage-controlled current source**:
-
-$$i_d = g_m v_{gs}$$
-
-Where the **transconductance** $g_m$ measures how effectively the gate voltage controls the drain current:
-
-$$g_m = \\frac{\\partial I_D}{\\partial V_{GS}} = \\mu_n C_{OX}\\frac{W}{L}(V_{GS} - V_{TH}) = \\sqrt{2\\mu_n C_{OX}\\frac{W}{L} I_D}$$
-
-Larger $g_m$ → better voltage-to-current conversion → higher gain amplifier.
-
----
-
-## 6. PMOS Transistor
-
-A **PMOS** transistor uses an N-type body with P⁺ Source and Drain. It works with negative gate voltages ($V_{GS} < V_{TH}$, where $V_{TH} < 0$) and carries **hole** current. Everything is mirrored compared to NMOS.
-
-PMOS and NMOS are complementary, which is why most digital logic uses **CMOS** (Complementary MOS) — pairing NMOS and PMOS devices. CMOS logic only draws significant current when switching (not when holding a state), making it incredibly power-efficient for digital logic.
-
----
-
-## 7. The MOSFET as a Digital Switch
-
-In digital circuits, the MOSFET is used as an ideal ON/OFF switch:
-
-- **Logic "0" (LOW):** $V_{GS} < V_{TH}$ → transistor OFF → output floats or pulled to $V_{DD}$
-- **Logic "1" (HIGH):** $V_{GS} > V_{TH}$ → transistor ON (in deep triode) → output pulled to ground
-
-A CMOS inverter (the most basic logic gate) uses one NMOS and one PMOS:
-
-\`\`\`
-CMOS Inverter:
-
-V_DD ─── PMOS ──┬─── Output
-                 │
-    Input ─────┤├──────
-                 │
-Ground ─── NMOS─┘
-
-Input = 0 (LOW): NMOS OFF, PMOS ON → Output = V_DD = 1 (HIGH)
-Input = 1 (HIGH): NMOS ON, PMOS OFF → Output = 0 (LOW)
-
-No static current flows in either state → Ultra low power!
-\`\`\`
-
-This basic inverter, combined in various configurations, builds every AND, OR, NOT, NAND, NOR, and XOR gate — and from those gates, you can build any digital circuit imaginable.
-
----
-
 ## 📋 Complete Law Summary — The MOSFET
 
 | Law / Formula | Expression | Description |
@@ -285,21 +233,4 @@ This basic inverter, combined in various configurations, builds every AND, OR, N
 | With channel length mod. | $I_D = \\frac{k_n}{2}(V_{GS}-V_{TH})^2(1+\\lambda V_{DS})$ | Real device |
 | Pinch-off voltage | $V_{DS,sat} = V_{GS} - V_{TH}$ | Boundary linear/saturation |
 | On-resistance (linear) | $R_{ON} = 1/[k_n(V_{GS}-V_{TH})]$ | For small $V_{DS}$ |
-| Transconductance | $g_m = k_n(V_{GS}-V_{TH}) = \\sqrt{2k_n I_D}$ | In saturation |
-| Output resistance | $r_o = 1/(\\lambda I_D)$ | In saturation |
-| Fermi potential | $\\Phi_F = (kT/q)\\ln(N_A/n_i)$ | Body Fermi potential |
-| Oxide capacitance | $C_{OX} = \\varepsilon_{ox}/t_{ox}$ | Key scaling parameter |
-
-**Important engineering insights:**
-- **Making MOSFETs faster:** Reduce $L$ (shorter channel → faster transit) and reduce $t_{ox}$ (better gate control, higher $C_{OX}$)
-- **Making MOSFETs stronger:** Increase $W/L$ ratio (wider/shorter channel)
-- **Trade-offs:** Shorter $L$ → faster but more leakage and harder to manufacture. Thinner $t_{ox}$ → better control but quantum tunneling through oxide.
-- **The 50-year journey of Moore's Law:** Channel length has gone from ~10 μm (1970) to ~2 nm (2023) — a 5000× reduction!
-
-**Design checklist:**
-1. Check regime: Is $V_{GS} > V_{TH}$? (If no → cut-off)
-2. If yes, compare $V_{DS}$ to $V_{GS} - V_{TH}$: smaller = linear, larger/equal = saturation
-3. Use the appropriate current formula
-4. For amplifier design: always operate in saturation (constant-current behavior)
-5. For digital switch: drive deep into linear regime when ON (minimum $V_{DS}$ drop across transistor)
 `;

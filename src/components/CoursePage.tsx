@@ -1,13 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useParams, Navigate, Link, useNavigate } from "react-router-dom";
 import { courses } from "../data/courses";
 import { MarkdownRenderer } from "./MarkdownRenderer";
-import { ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowLeft, Menu } from "lucide-react";
+import { useSidebar } from "./Layout";
 
 export function CoursePage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const contentRef = useRef<HTMLDivElement>(null);
+  const { isMobile, toggle } = useSidebar();
 
   const idx = courses.findIndex((c) => c.id === id);
   if (idx === -1) return <Navigate to="/" replace />;
@@ -20,24 +22,42 @@ export function CoursePage() {
     <>
       {/* ── HEADER ──────────────────────────────────────────── */}
       <div style={{
-        padding: "0.85rem 1.5rem",
+        padding: isMobile ? "0.7rem 1rem" : "0.85rem 1.5rem",
         borderBottom: "2px solid #1B1B1B",
         background: "#FEFEFE",
         flexShrink: 0,
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        gap: "1rem",
+        gap: "0.6rem",
       }}>
-        {/* Left: back + title */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", minWidth: 0 }}>
+        {/* Left: hamburger (mobile) + back + title */}
+        <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "0.5rem" : "0.8rem", minWidth: 0 }}>
+          {isMobile && (
+            <button
+              onClick={toggle}
+              style={{
+                background: "#3E2723",
+                border: "2px solid #1B1B1B",
+                color: "#D7CCC8",
+                cursor: "pointer",
+                padding: "0.3rem",
+                display: "flex",
+                alignItems: "center",
+                flexShrink: 0,
+              }}
+              aria-label="Open menu"
+            >
+              <Menu size={16} />
+            </button>
+          )}
           <Link to="/" style={{
             display: "flex",
             alignItems: "center",
             gap: "0.3rem",
             background: "#3E2723",
             color: "#D7CCC8",
-            padding: "0.3rem 0.65rem",
+            padding: isMobile ? "0.3rem" : "0.3rem 0.65rem",
             fontSize: "0.68rem",
             fontFamily: "Courier New, monospace",
             fontWeight: 700,
@@ -48,7 +68,7 @@ export function CoursePage() {
             flexShrink: 0,
           }}>
             <ArrowLeft size={11} />
-            HOME
+            {!isMobile && "HOME"}
           </Link>
           <div style={{ minWidth: 0 }}>
             <div style={{
@@ -122,7 +142,7 @@ export function CoursePage() {
 
       {/* ── DESCRIPTION STRIP ───────────────────────────────── */}
       <div style={{
-        padding: "0.55rem 1.5rem",
+        padding: isMobile ? "0.45rem 1rem" : "0.55rem 1.5rem",
         background: "#F5F0EE",
         borderBottom: "1px solid #D7CCC8",
         flexShrink: 0,
@@ -140,14 +160,14 @@ export function CoursePage() {
         style={{
           flex: 1,
           overflowY: "auto",
-          padding: "1.5rem",
+          padding: isMobile ? "0.75rem" : "1.5rem",
         }}
       >
         <div style={{
           background: "#FEFEFE",
           border: "2px solid #1B1B1B",
-          boxShadow: "5px 5px 0 #1B1B1B",
-          padding: "1.8rem 2rem",
+          boxShadow: isMobile ? "3px 3px 0 #1B1B1B" : "5px 5px 0 #1B1B1B",
+          padding: isMobile ? "1rem" : "1.8rem 2rem",
           maxWidth: "860px",
           margin: "0 auto",
         }}>

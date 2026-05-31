@@ -68,8 +68,6 @@ The size of $E_g$ completely determines what kind of material you have:
 | Semiconductor | ~0.1 to ~3 eV | Si (1.12 eV), GaAs (1.42 eV), Ge (0.66 eV) | Controlled conduction |
 | Insulator | > 5 eV | SiO₂ (9 eV), Diamond (5.5 eV) | Barely conducts |
 
-Silicon is the king of semiconductors: its 1.12 eV gap is small enough that thermal energy at room temperature can occasionally pop an electron across, but large enough that this doesn't happen too often and we have good control.
-
 ---
 
 ## 2. Holes — The Second Type of Carrier
@@ -202,11 +200,6 @@ At T = 0K: ALL states below E_F are filled (f=1), ALL states above are empty (f=
 At T > 0K: A smooth "smearing" of a few kT wide appears around E_F.
            Some electrons above E_F, some holes below E_F.
 \`\`\`
-
-**Key property:** At room temperature ($T = 300K$), $kT = 0.026$ eV. For energies more than a few $kT$ above $E_F$, the Fermi-Dirac function can be approximated by the **Boltzmann approximation:**
-$$f(E) \\approx \\exp\\left(-\\frac{E - E_F}{kT}\\right) \\quad \\text{for } E \\gg E_F$$
-
-This approximation is valid when the Fermi level is well within the bandgap (which it is for non-degenerate semiconductors), and it makes calculations much easier.
 
 ---
 

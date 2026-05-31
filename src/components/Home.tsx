@@ -1,42 +1,66 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { courses } from "../data/courses";
-import { FlaskConical, BookMarked } from "lucide-react";
+import { FlaskConical, BookMarked, Menu } from "lucide-react";
+import { useSidebar } from "./Layout";
 
 export function Home() {
+  const { isMobile, toggle } = useSidebar();
+
   return (
     <>
       {/* ── PAGE HEADER ───────────────────────────────────────── */}
       <div style={{
-        padding: "1rem 1.5rem 0.85rem",
+        padding: isMobile ? "0.7rem 1rem" : "1rem 1.5rem 0.85rem",
         borderBottom: "2px solid #1B1B1B",
         background: "#FEFEFE",
         flexShrink: 0,
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
+        gap: "0.6rem",
       }}>
-        <div>
-          <div style={{
-            fontSize: "0.62rem",
-            textTransform: "uppercase",
-            letterSpacing: "1.5px",
-            color: "#795548",
-            fontWeight: 800,
-            marginBottom: "0.15rem",
-            fontFamily: "Courier New, monospace",
-          }}>
-            ENSNN · Semiconductor Physics
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          {isMobile && (
+            <button
+              onClick={toggle}
+              style={{
+                background: "#3E2723",
+                border: "2px solid #1B1B1B",
+                color: "#D7CCC8",
+                cursor: "pointer",
+                padding: "0.3rem",
+                display: "flex",
+                alignItems: "center",
+                flexShrink: 0,
+              }}
+              aria-label="Open menu"
+            >
+              <Menu size={16} />
+            </button>
+          )}
+          <div>
+            <div style={{
+              fontSize: "0.62rem",
+              textTransform: "uppercase",
+              letterSpacing: "1.5px",
+              color: "#795548",
+              fontWeight: 800,
+              marginBottom: "0.15rem",
+              fontFamily: "Courier New, monospace",
+            }}>
+              ENSNN · Semiconductor Physics
+            </div>
+            <h2 style={{
+              fontSize: isMobile ? "1.05rem" : "1.3rem",
+              fontWeight: 900,
+              color: "#1B1B1B",
+              margin: 0,
+              letterSpacing: "-0.3px",
+            }}>
+              Course Overview
+            </h2>
           </div>
-          <h2 style={{
-            fontSize: "1.3rem",
-            fontWeight: 900,
-            color: "#1B1B1B",
-            margin: 0,
-            letterSpacing: "-0.3px",
-          }}>
-            Course Overview
-          </h2>
         </div>
         <div style={{
           display: "flex",
@@ -57,10 +81,10 @@ export function Home() {
       </div>
 
       {/* ── SCROLLABLE BODY ───────────────────────────────────── */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "1.2rem 1.5rem" }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? "0.75rem" : "1.2rem 1.5rem" }}>
 
         {/* Welcome card */}
-        <div style={{
+        <div className="home-welcome-card" style={{
           background: "#3E2723",
           border: "2px solid #1B1B1B",
           boxShadow: "5px 5px 0 #1B1B1B",

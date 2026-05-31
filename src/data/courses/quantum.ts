@@ -44,13 +44,7 @@ In 1801, Thomas Young passed a beam of light through a barrier with two narrow s
 
 Alternating **bright and dark bands** — an **interference pattern**. This is the unmistakable signature of waves. Only waves can pass through both slits simultaneously and interfere with each other.
 
-**But** — when scientists used very sensitive detectors, they found that the light arrived at the screen in individual, localized *flashes*, like particles hitting a surface.
-
-And the strangest result: when you fire electrons (not light) through the same double slit, **one at a time**, each electron creates a single flash on the screen. But after millions of individual electrons have hit the screen, the accumulation of flashes forms... the same interference pattern!
-
-**Each individual electron interferes with itself.** It somehow passes through both slits simultaneously, like a wave, but lands at one point, like a particle.
-
-This is the foundational mystery: **matter has both wave-like and particle-like properties simultaneously.** This is called **Wave-Particle Duality**.
+The light arrives in individual localized flashes — like particles — yet the accumulated pattern is that of waves. This is **Wave-Particle Duality**: matter exhibits both wave-like and particle-like behaviour.
 
 ---
 
@@ -73,66 +67,13 @@ Where:
 
 **What is an eV (electron-volt)?** In atomic physics, the Joule is an inconveniently large unit. We use the **electron-volt**: the energy gained by one electron when it moves through a potential difference of 1 Volt. $1 \\text{ eV} = 1.6 \\times 10^{-19}$ J.
 
-**Physical insight from $E = h\\nu$:** Blue light ($\\nu$ high, $\\lambda$ short) carries more energy per photon than red light ($\\nu$ low, $\\lambda$ long). UV photons carry enough energy to break chemical bonds (causes sunburn). Radio wave photons carry almost no energy each.
-
 ---
 
 ## 3. The Atomic Models — How We Discovered the Atom's Structure
 
 Since atoms are about $10^{-10}$ meters wide (0.1 nanometers), you cannot see them with any light (visible light has wavelengths of ~500 nm, much larger than an atom). Scientists built models through indirect experiments.
 
-### Model 1: Dalton (1808) — The Solid Sphere
-
-Atoms are tiny, indivisible, solid balls like microscopic billiard balls. Each element is a different kind of ball.
-
-*Problem:* Cannot explain electricity, light emission, or chemistry.
-
-### Model 2: Thomson (1904) — The Plum Pudding
-
-Thomson discovered the electron (a negative particle) inside atoms. He proposed: the atom is a ball of uniformly distributed positive charge, with electrons embedded in it like raisins in a plum pudding or blueberries in a muffin.
-
-*Problem:* Rutherford's experiment (next) destroyed this model.
-
-### Model 3: Rutherford (1911) — The Planetary Model
-
-Rutherford fired **alpha particles** (helium nuclei: tiny, fast, positive) at a thin gold foil and watched where they went.
-
-**Expected result (Thomson model):** Positive charge spread uniformly → all alphas pass straight through with tiny deflections.
-
-**Actual result:** Most went straight through. But some deflected at large angles. And a few bounced almost **straight back**.
-
-\`\`\`
-Expected:    → → → → → → (all pass through)
-Actual:      → → → → → → (most pass through)
-               ↗           (some deflect)
-                  ←        (a few bounce back!)
-\`\`\`
-
-Rutherford's conclusion: The atom is **mostly empty space**, but has a tiny, incredibly dense, positively charged core at the center: the **nucleus**. The electrons orbit far away like planets around the sun.
-
-\`\`\`
-Rutherford's Atom (1911):
-
-              e⁻
-             /
-            /    (electron orbiting far from nucleus,
-   (+++) ──●      in mostly empty space)
-   nucleus  \\
-             \\
-              e⁻
-\`\`\`
-
-The nucleus contains:
-- **Protons** (positive charge, +$e$)
-- **Neutrons** (no charge, just mass)
-
-The number of protons = **atomic number** = determines which element it is.
-
-**The Fatal Flaw of Rutherford's Model:** In classical electromagnetism, a charged particle undergoing circular motion (like an orbiting electron) is constantly **accelerating** (centripetal acceleration). Accelerating charges must emit electromagnetic radiation. This means the electron should continuously lose energy, spiral inward toward the nucleus, and crash into it in about $10^{-11}$ seconds.
-
-Stable matter simply **should not exist** according to classical physics. Yet here we are. This was the deepest crisis in 19th-century physics.
-
-### Model 4: Bohr (1913) — Quantum Orbits
+### The Bohr Model (1913) — Quantum Orbits
 
 Niels Bohr saved Rutherford's model by **forcing quantum rules** onto it. He simply postulated:
 
@@ -157,13 +98,9 @@ Energy Level Diagram for Hydrogen:
 -13.6 eV ───────── n = 1 ← GROUND STATE (lowest energy, most stable)
 \`\`\`
 
-**Why negative energies?** By convention, a free electron (infinitely far from the nucleus) has zero energy. Bound electrons have *less* energy than free electrons, so they have negative energy. Think of it like a ball in a gravitational well: the ball at the bottom of a pit has less (more negative) energy than a ball sitting on flat ground.
-
 **Ground state:** The lowest energy orbit ($n=1$, $E_1 = -13.6$ eV). The electron is at its most stable configuration here.
 
 **Ionization:** To completely free the electron from hydrogen in the ground state, you need to add exactly $13.6$ eV. This is the **ionization energy**.
-
-Bohr's model works perfectly for hydrogen and hydrogen-like ions, but fails for atoms with multiple electrons. It's a brilliant stepping stone, not the final answer.
 
 ---
 
@@ -177,36 +114,9 @@ $$\\lambda = \\frac{h}{p} = \\frac{h}{mv}$$
 
 Where $p = mv$ is the **momentum** (mass × velocity) of the particle.
 
-**For a baseball** ($m = 0.145$ kg, $v = 40$ m/s):
-$$\\lambda = \\frac{6.626 \\times 10^{-34}}{0.145 \\times 40} \\approx 10^{-34} \\text{ m}$$
-
-This is $10^{19}$ times smaller than an atomic nucleus. Completely undetectable. This is why your baseball does not diffract through doorways.
-
-**For an electron** ($m = 9.11 \\times 10^{-31}$ kg, $v = 10^6$ m/s):
-$$\\lambda = \\frac{6.626 \\times 10^{-34}}{9.11 \\times 10^{-31} \\times 10^6} \\approx 0.7 \\text{ nm}$$
-
-This is comparable to the atomic spacing in a silicon crystal (about 0.54 nm)! So electrons really do diffract and interfere when moving through crystals. This has enormous consequences for semiconductors.
-
 ---
 
-## 5. Heisenberg's Uncertainty Principle (1927)
-
-Werner Heisenberg derived a fundamental limitation of nature:
-
-$$\\Delta x \\cdot \\Delta p_x \\geq \\frac{\\hbar}{2}$$
-
-Where:
-- $\\Delta x$ = uncertainty in position
-- $\\Delta p_x$ = uncertainty in momentum (along the same direction)
-- $\\hbar = h / (2\\pi) = 1.055 \\times 10^{-34}$ J·s (pronounced "h-bar")
-
-**This is not about bad instruments.** This is a fundamental property of nature. A quantum particle simply **does not have** a perfectly defined position AND a perfectly defined momentum at the same time. Measuring one disturbs the other.
-
-**Intuition:** To locate an electron, you bounce a photon off it. To see it precisely, use a short-wavelength (high-energy) photon. But the high-energy photon gives the electron a large kick, disturbing its momentum. More precise position → more uncertain momentum. You cannot escape this tradeoff.
-
----
-
-## 6. Schrödinger's Equation — The Master Equation of Quantum Mechanics (1926)
+## 5. Schrödinger's Equation — The Master Equation of Quantum Mechanics (1926)
 
 Erwin Schrödinger asked: if the electron is a wave, what is its wave equation? The result is the most important equation in atomic physics:
 
@@ -256,39 +166,6 @@ When you solve Schrödinger's equation for an electron in an atom, every allowed
 
 **Pauli Exclusion Principle:** No two electrons in the same atom can have all four quantum numbers identical. This means each orbital can hold at most **2 electrons** (one spin up, one spin down).
 
-This principle is the reason atoms have structure, chemistry exists, and matter is solid. It is also the reason energy bands form in crystals.
-
----
-
-## 7. Why This Leads Directly to Semiconductors
-
-Here is the key chain of logic:
-
-**Step 1:** Electrons in atoms have quantized (discrete) energy levels, because Schrödinger's equation only has solutions for specific $E$ values.
-
-**Step 2:** When you bring billions of atoms together ($N \\approx 10^{23}$, like in a silicon crystal), the Pauli Exclusion Principle forbids all those electrons from having the same energy. The discrete levels **split** into enormously large groups of tightly packed levels.
-
-**Step 3:** With $10^{23}$ atoms, the split levels are so densely packed that they form **continuous Energy Bands**.
-
-**Step 4:** Between the bands, there are ranges of energy where NO allowed quantum states exist. This is the **Forbidden Bandgap** or **Energy Gap**.
-
-**Step 5:** The size of the bandgap determines whether a material is a metal (no gap, electrons flow freely), an insulator (huge gap, electrons can't jump), or a **semiconductor** (just-right gap, can be controlled).
-
-\`\`\`
-From Isolated Atoms → Crystal Energy Bands:
-
-Isolated Si atom:         Silicon Crystal (10²³ atoms):
-
-3p level ───────          ══════════════ Conduction Band (EC)
-                                         ← Bandgap (Eg = 1.12 eV) →
-3s level ───────          ══════════════ Valence Band (EV)
-
-2p level ───────          (deeper levels also form bands, but
-2s level ───────           we mainly care about the top two)
-\`\`\`
-
-This is what the next chapter covers in full detail.
-
 ---
 
 ## 📋 Complete Law Summary — Quantum Physics
@@ -303,10 +180,4 @@ This is what the next chapter covers in full detail.
 | Bohr energy levels (H) | $E_n = -13.6/n^2$ eV | eV |
 | Schrödinger equation | $\\hat{H}\\psi = E\\psi$ | — |
 | Born probability | $P(x) = |\\psi(x)|^2$ | m$^{-1}$ |
-| Heisenberg uncertainty | $\\Delta x \\cdot \\Delta p \\geq \\hbar/2$ | J·m |
-| Electron charge | $q = 1.6 \\times 10^{-19}$ | C |
-| Electron mass | $m_0 = 9.11 \\times 10^{-31}$ | kg |
-| Boltzmann constant | $k = 8.617 \\times 10^{-5}$ | eV/K |
-| Thermal energy at 300K | $kT = 0.026$ eV | eV |
-| Unit conversion | $1$ eV $= 1.6 \\times 10^{-19}$ J | — |
 `;

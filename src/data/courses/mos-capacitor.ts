@@ -35,7 +35,7 @@ MOS Capacitor — Cross-Section View:
 
 **Metal Gate:** The control electrode. We apply voltage $V_G$ here. In modern chips, this is often doped polycrystalline silicon (poly-Si) rather than a real metal, but the physics is the same.
 
-**Oxide ($SiO_2$):** Grown by heating silicon in an oxygen atmosphere. Silicon dioxide is an almost perfect insulator — no DC current flows through it. This is the "glass pane" separating the metal from the semiconductor. Its thickness $t_{ox}$ ranges from ~10 nm (older technology) down to ~1 nm (modern FinFETs). It is so thin that in modern chips, quantum mechanical tunneling can occur through it.
+**Oxide ($SiO_2$):** Grown by heating silicon in an oxygen atmosphere. Silicon dioxide is an almost perfect insulator — no DC current flows through it. This is the glass layer separating the metal from the semiconductor.
 
 Its capacitance per unit area:
 $$C_{OX} = \\frac{\\varepsilon_{ox}}{t_{ox}}$$
@@ -244,16 +244,6 @@ Inversion (low freq): C → C_OX again (inversion electrons fully respond)
 {"type":"mos-cv","title":"MOS Capacitor C-V Curve (P-type substrate, NMOS)","COX":1.0,"Cmin":0.28,"VFB":-0.8,"VTH":2.0}
 \`\`\`
 
-## 7. Body Effect — When Source-Body Voltage Matters
-
-In a real MOSFET, if a reverse bias $V_{SB}$ is applied between Source and Body (bulk), the depletion charge $Q_D$ increases:
-
-$$V_{TH}(V_{SB}) = V_{TH}(0) + \\gamma\\left(\\sqrt{2\\Phi_F + V_{SB}} - \\sqrt{2\\Phi_F}\\right)$$
-
-Where $\\gamma = \\sqrt{2q\\varepsilon_s N_A} / C_{OX}$ is the **body effect coefficient**. This effect is important in circuits where multiple transistors are stacked.
-
----
-
 ## 📋 Complete Law Summary — MOS Capacitor
 
 | Law / Formula | Expression | Description |
@@ -269,8 +259,6 @@ Where $\\gamma = \\sqrt{2q\\varepsilon_s N_A} / C_{OX}$ is the **body effect coe
 | Threshold voltage | $V_{TH} = V_{FB} + 2\\Phi_F - Q_D/C_{OX}$ | Onset of inversion |
 | Depletion capacitance | $C_{dep} = \\varepsilon_s/W_{dep}$ | Series with $C_{OX}$ |
 | Total C (depletion) | $C = C_{OX}C_{dep}/(C_{OX}+C_{dep})$ | Series combination |
-| Body effect | $V_{TH}(V_{SB}) = V_{TH}(0) + \\gamma(\\sqrt{2\\Phi_F+V_{SB}}-\\sqrt{2\\Phi_F})$ | With source-body bias |
-| Body effect coeff. | $\\gamma = \\sqrt{2q\\varepsilon_s N_A}/C_{OX}$ | Body effect parameter |
 
 **Physical interpretation checklist:**
 - $V_G < V_{FB}$: Accumulation (holes attracted, C = C_OX)
